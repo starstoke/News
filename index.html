@@ -174,6 +174,69 @@
       }
     }
 
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      height: 400px;
+      margin-bottom: 60px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-content {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 80%;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 100;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      color: #ccc;
+      font-weight: 100;
+      letter-spacing: 0.15em;
+    }
+
     .section {
       margin-bottom: 60px;
       opacity: 0;
@@ -254,6 +317,85 @@
       margin-bottom: 12px;
       font-weight: 100;
       letter-spacing: 0.1em;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 60px 20px;
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 30px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .modal-close:hover {
+      color: #FFF8E1;
+    }
+
+    .modal-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 100;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .modal-date {
+      color: #999;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .modal-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .modal-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 15px;
     }
 
     footer {
@@ -337,6 +479,23 @@
         padding: 0 10px;
       }
 
+      .hero-section {
+        height: 300px;
+      }
+
+      .hero-content {
+        padding: 15px;
+        max-width: 90%;
+      }
+
+      .hero-title {
+        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      }
+
+      .hero-subtitle {
+        font-size: clamp(0.8rem, 1.3vw, 0.9rem);
+      }
+
       .section {
         margin-bottom: 50px;
         padding: 25px 10px;
@@ -353,6 +512,22 @@
       }
 
       .news-image {
+        height: 100px;
+      }
+
+      .modal {
+        padding: 40px 10px;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .modal-title {
+        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      }
+
+      .modal-image {
         height: 100px;
       }
     }
@@ -382,10 +557,33 @@
         <p class="tagline">Latest updates and announcements</p>
       </header>
 
+      <section class="hero-section">
+        <div class="hero-carousel">
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+1');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="1">DJ Nexus Release</h2>
+              <p class="hero-subtitle">Album "Digital Dreams" — 12 tracks redefining reality</p>
+            </div>
+          </div>
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+2');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="2">Starstoke at Festival</h2>
+              <p class="hero-subtitle">Label artists to perform at a major music event</p>
+            </div>
+          </div>
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+3');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="3">New Collection</h2>
+              <p class="hero-subtitle">Exclusive clothing line from top designers</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section">
         <h2 class="section-title">All News</h2>
         <div class="grid">
-          <div class="news-card" onclick="window.open('release-dj-nexus.html', '_blank');">
+          <div class="news-card" data-article-id="1">
             <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
             <div class="news-content">
               <div class="news-date">October 5, 2025</div>
@@ -393,7 +591,7 @@
               <p class="card-subtitle">Album "Digital Dreams" — 12 tracks redefining reality</p>
             </div>
           </div>
-          <div class="news-card" onclick="window.open('festival.html', '_blank');">
+          <div class="news-card" data-article-id="2">
             <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
             <div class="news-content">
               <div class="news-date">October 1, 2025</div>
@@ -401,7 +599,7 @@
               <p class="card-subtitle">Label artists to perform at a major music event</p>
             </div>
           </div>
-          <div class="news-card" onclick="window.open('new-collection.html', '_blank');">
+          <div class="news-card" data-article-id="3">
             <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
             <div class="news-content">
               <div class="news-date">September 28, 2025</div>
@@ -409,7 +607,7 @@
               <p class="card-subtitle">Exclusive clothing line from top designers</p>
             </div>
           </div>
-          <div class="news-card" onclick="window.open('upcoming-event.html', '_blank');">
+          <div class="news-card" data-article-id="4">
             <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
             <div class="news-content">
               <div class="news-date">September 20, 2025</div>
@@ -419,6 +617,16 @@
           </div>
         </div>
       </section>
+
+      <div class="modal" id="article-modal">
+        <div class="modal-content">
+          <span class="modal-close">&times;</span>
+          <h2 class="modal-title"></h2>
+          <div class="modal-date"></div>
+          <div class="modal-text"></div>
+          <div class="modal-images"></div>
+        </div>
+      </div>
 
       <footer>
         <h2 class="logo" style="font-size: 1.8rem; margin-bottom: 15px;">St<span class="star">★</span>rstoke</h2>
@@ -437,7 +645,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Vanta.js initialization (same as main)
+      // Vanta.js initialization
       const isMobile = window.innerWidth <= 768;
       let vantaEffect = VANTA.NET({
         el: "#vanta-bg",
@@ -456,6 +664,117 @@
         showDots: true,
         lineOpacity: isMobile ? 0.15 : 0.25
       });
+
+      // Hero Carousel
+      const slides = document.querySelectorAll('.hero-slide');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      showSlide(currentSlide);
+      setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+      // Article Data
+      const articles = {
+        1: {
+          title: 'DJ Nexus Release',
+          date: 'October 5, 2025',
+          text: 'DJ Nexus has dropped their groundbreaking album "Digital Dreams," featuring 12 tracks that blend electronic beats with immersive soundscapes. This release pushes the boundaries of modern music, offering listeners a journey through virtual realities and emotional depths.',
+          images: [
+            'https://via.placeholder.com/600x200?text=Article+Image+1',
+            'https://via.placeholder.com/600x200?text=Article+Image+2'
+          ]
+        },
+        2: {
+          title: 'Starstoke at Festival',
+          date: 'October 1, 2025',
+          text: 'Starstoke artists are set to light up the stage at this year’s biggest music festival. Expect electrifying performances and exclusive previews of upcoming tracks from our top talents.',
+          images: [
+            'https://via.placeholder.com/600x200?text=Festival+Image+1',
+            'https://via.placeholder.com/600x200?text=Festival+Image+2'
+          ]
+        },
+        3: {
+          title: 'New Collection',
+          date: 'September 28, 2025',
+          text: 'Our exclusive clothing line, designed in collaboration with top artists and designers, is now available. Featuring bold graphics and sustainable materials, this collection is a must-have for fans.',
+          images: [
+            'https://via.placeholder.com/600x200?text=Collection+Image+1',
+            'https://via.placeholder.com/600x200?text=Collection+Image+2'
+          ]
+        },
+        4: {
+          title: 'Upcoming Event',
+          date: 'September 20, 2025',
+          text: 'Join us for an unforgettable live show featuring Starstoke’s rising stars. Expect a night of music, visuals, and exclusive merchandise drops.',
+          images: [
+            'https://via.placeholder.com/600x200?text=Event+Image+1',
+            'https://via.placeholder.com/600x200?text=Event+Image+2'
+          ]
+        }
+      };
+
+      // Modal Functionality
+      const modal = document.getElementById('article-modal');
+      const modalTitle = modal.querySelector('.modal-title');
+      const modalDate = modal.querySelector('.modal-date');
+      const modalText = modal.querySelector('.modal-text');
+      const modalImages = modal.querySelector('.modal-images');
+      const modalClose = modal.querySelector('.modal-close');
+
+      function openModal(articleId) {
+        const article = articles[articleId];
+        modalTitle.textContent = article.title;
+        modalDate.textContent = article.date;
+        modalText.textContent = article.text;
+        modalImages.innerHTML = article.images.map(img => 
+          `<div class="modal-image" style="background-image: url('${img}');"></div>`
+        ).join('');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+
+      document.querySelectorAll('.news-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const articleId = card.getAttribute('data-article-id');
+          openModal(articleId);
+        });
+      });
+
+      document.querySelectorAll('.hero-title').forEach(title => {
+        title.addEventListener('click', () => {
+          const articleId = title.getAttribute('data-article-id');
+          openModal(articleId);
+        });
+      });
+
+      modalClose.addEventListener('click', closeModal);
+
+      // Make sections visible on scroll
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      sections.forEach(section => observer.observe(section));
     });
   </script>
 </body>
