@@ -610,9 +610,8 @@
           <div class="news-card" data-article-id="4">
             <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
             <div class="news-content">
-              <div class="news-date">September 20, 2025</div>
-              <h3 class="card-title">Upcoming Event</h3>
-              <p class="card-subtitle">Join us for the next live show</p>
+              <h3 class="card-title">HYPERBEAST ! Slut Online Thaipei live performance</h3>
+              <p class="card-subtitle">Click to read more…</p>
             </div>
           </div>
         </div>
@@ -713,9 +712,9 @@
           ]
         },
         4: {
-          title: 'Upcoming Event',
-          date: 'September 20, 2025',
-          text: 'Join us for an unforgettable live show featuring Starstoke’s rising stars. Expect a night of music, visuals, and exclusive merchandise drops.',
+          title: 'HYPERBEAST ! Slut Online Thaipei live performance',
+          date: '',
+          text: 'Event hosted by «UWP 數位藝術音樂節 Digital Art Center Music Festival 001» in Thaipei saw participation with our incredible sound and music designer Slut Online, who also got a feature in Thaiwan HYPERBEAST promo! <br>Read the official event news page <a href="https://events.mcu.edu.tw/event/uwp-%E6%95%B8%E4%BD%8D%E8%97%9D%E8%A1%93%E9%9F%B3%E6%A8%82%E7%AF%80-digital-art-center-music-festival-001-slut-online/">here</a>',
           images: [
             'https://via.placeholder.com/600x200?text=Event+Image+1',
             'https://via.placeholder.com/600x200?text=Event+Image+2'
@@ -735,7 +734,7 @@
         const article = articles[articleId];
         modalTitle.textContent = article.title;
         modalDate.textContent = article.date;
-        modalText.textContent = article.text;
+        modalText.innerHTML = article.text;
         modalImages.innerHTML = article.images.map(img => 
           `<div class="modal-image" style="background-image: url('${img}');"></div>`
         ).join('');
