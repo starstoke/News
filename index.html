@@ -264,19 +264,27 @@
       background-clip: text;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
+    .news-carousel {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .news-slides {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.6s cubic-bezier(0.33, 0, 0.66, 1);
     }
 
     .news-card {
+      flex: 0 0 250px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 30px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1);
       cursor: pointer;
+      margin-bottom: 0; /* Remove gap for carousel */
     }
 
     .news-card:hover {
@@ -316,6 +324,36 @@
       margin-bottom: 12px;
       font-weight: 100;
       letter-spacing: 0.1em;
+    }
+
+    .news-controls {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 2;
+    }
+
+    .news-control {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1);
+    }
+
+    .news-control:hover {
+      background: rgba(255, 248, 225, 0.1);
+      border-color: rgba(255, 248, 225, 0.3);
+      box-shadow: 0 0 10px rgba(255, 248, 225, 0.2);
     }
 
     .modal {
@@ -545,13 +583,26 @@
         margin-bottom: 25px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+      .news-carousel {
+        height: 220px;
+      }
+
+      .news-card {
+        flex: 0 0 220px;
       }
 
       .news-image {
         height: 100px;
+      }
+
+      .news-controls {
+        right: 10px;
+        gap: 10px;
+      }
+
+      .news-control {
+        width: 30px;
+        height: 30px;
       }
 
       .modal {
@@ -632,50 +683,98 @@
               <p class="hero-subtitle">Click to read more…</p>
             </div>
           </div>
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+6');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="6">VIP $XD creator live stram set-up</h2>
+              <p class="hero-subtitle">Click to read more…</p>
+            </div>
+          </div>
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+7');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="7">Malina Scar birthday party digest</h2>
+              <p class="hero-subtitle">Click to read more…</p>
+            </div>
+          </div>
+          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+8');">
+            <div class="hero-content">
+              <h2 class="hero-title" data-article-id="8">LOVESOMEMAMA live appreciate</h2>
+              <p class="hero-subtitle">Click to read more…</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="section">
         <h2 class="section-title">All News</h2>
-        <div class="grid">
-          <div class="news-card" data-article-id="1">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">25 January 2025</div>
-              <h3 class="card-title">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h3>
-              <p class="card-subtitle">Check out our first big promo party!</p>
+        <div class="news-carousel">
+          <div class="news-slides">
+            <div class="news-card" data-article-id="1">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">25 January 2025</div>
+                <h3 class="card-title">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h3>
+                <p class="card-subtitle">Check out our first big promo party!</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="2">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">13 december, 2024</div>
+                <h3 class="card-title">Starstoke promotion opening ivent.</h3>
+                <p class="card-subtitle">Read more information…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="3">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">September 28, 2025</div>
+                <h3 class="card-title">ETOPOLE Visual digest from the capital!</h3>
+                <p class="card-subtitle">Click here to watch and see more…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="4">
+              <div class="news-image" style="background-image: url('IMG_7535.jpeg');"></div>
+              <div class="news-content">
+                <h3 class="card-title">HYPERBEAST ! Slut Online Thaipei live performance</h3>
+                <p class="card-subtitle">Click to read more…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="5">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">2 march 2025</div>
+                <h3 class="card-title">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h3>
+                <p class="card-subtitle">Click to read more…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="6">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">15 October 2025</div>
+                <h3 class="card-title">VIP $XD creator live stram set-up</h3>
+                <p class="card-subtitle">Click to read more…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="7">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">20 October 2025</div>
+                <h3 class="card-title">Malina Scar birthday party digest</h3>
+                <p class="card-subtitle">Click to read more…</p>
+              </div>
+            </div>
+            <div class="news-card" data-article-id="8">
+              <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+              <div class="news-content">
+                <div class="news-date">25 October 2025</div>
+                <h3 class="card-title">LOVESOMEMAMA live appreciate</h3>
+                <p class="card-subtitle">Click to read more…</p>
+              </div>
             </div>
           </div>
-          <div class="news-card" data-article-id="2">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">13 december, 2024</div>
-              <h3 class="card-title">Starstoke promotion opening ivent.</h3>
-              <p class="card-subtitle">Read more information…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="3">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">September 28, 2025</div>
-              <h3 class="card-title">ETOPOLE Visual digest from the capital!</h3>
-              <p class="card-subtitle">Click here to watch and see more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="4">
-            <div class="news-image" style="background-image: url('IMG_7535.jpeg');"></div>
-            <div class="news-content">
-              <h3 class="card-title">HYPERBEAST ! Slut Online Thaipei live performance</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="5">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">2 march 2025</div>
-              <h3 class="card-title">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
+          <div class="news-controls">
+            <div class="news-control prev"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 18L10 10L2 2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="news-control next"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10L2 18" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
           </div>
         </div>
       </section>
@@ -728,22 +827,51 @@
       });
 
       // Hero Carousel
-      const slides = document.querySelectorAll('.hero-slide');
-      let currentSlide = 0;
+      const heroSlides = document.querySelectorAll('.hero-slide');
+      let currentHeroSlide = 0;
 
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
+      function showHeroSlide(index) {
+        heroSlides.forEach((slide, i) => {
           slide.classList.toggle('active', i === index);
         });
       }
 
-      function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
+      function nextHeroSlide() {
+        currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+        showHeroSlide(currentHeroSlide);
       }
 
-      showSlide(currentSlide);
-      setInterval(nextSlide, 5000); // Change slide every 5 seconds
+      showHeroSlide(currentHeroSlide);
+      setInterval(nextHeroSlide, 5000);
+
+      // News Vertical Carousel
+      const newsSlides = document.querySelectorAll('.news-card');
+      const newsControls = document.querySelectorAll('.news-control');
+      let currentNewsIndex = 0;
+      const slideHeight = 250; // Match the flex: 0 0 250px
+
+      function showNewsSlide(index) {
+        const totalSlides = newsSlides.length;
+        index = (index + totalSlides) % totalSlides;
+        const translateY = -index * slideHeight;
+        document.querySelector('.news-slides').style.transform = `translateY(${translateY}px)`;
+        currentNewsIndex = index;
+      }
+
+      newsControls.forEach(control => {
+        control.addEventListener('click', () => {
+          if (control.classList.contains('prev')) {
+            showNewsSlide(currentNewsIndex - 1);
+          } else if (control.classList.contains('next')) {
+            showNewsSlide(currentNewsIndex + 1);
+          }
+        });
+      });
+
+      showNewsSlide(currentNewsIndex);
+      setInterval(() => {
+        showNewsSlide(currentNewsIndex + 1);
+      }, 6000);
 
       // Article Data
       const articles = {
@@ -776,7 +904,7 @@
         },
         4: {
           title: 'HYPERBEAST ! Slut Online Thaipei live performance',
-          date: '',
+          date: '2 March 2024',
           text: 'Event hosted by «UWP 數位藝術音樂節 Digital Art Center Music Festival 001» in Thaipei saw participation with our incredible sound and music designer Slut Online, who also got a feature in Thaiwan HYPERBEAST promo! <br>Read the official event news page <a href="https://events.mcu.edu.tw/event/uwp-%E6%95%B8%E4%BD%8D%E8%97%9D%E8%A1%93%E9%9F%B3%E6%A8%82%E7%AF%80-digital-art-center-music-festival-001-slut-online/">here</a>',
           images: [
             'https://via.placeholder.com/600x200?text=Event+Image+1',
@@ -793,6 +921,33 @@
           images: [
             'https://via.placeholder.com/600x200?text=Event+Image+1',
             'https://via.placeholder.com/600x200?text=Event+Image+2'
+          ]
+        },
+        6: {
+          title: 'VIP $XD creator live stram set-up',
+          date: '15 October 2025',
+          text: 'Placeholder text for VIP $XD creator live stram set-up. More details coming soon...',
+          images: [
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
+          ]
+        },
+        7: {
+          title: 'Malina Scar birthday party digest',
+          date: '20 October 2025',
+          text: 'Placeholder text for Malina Scar birthday party digest. More details coming soon...',
+          images: [
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
+          ]
+        },
+        8: {
+          title: 'LOVESOMEMAMA live appreciate',
+          date: '25 October 2025',
+          text: 'Placeholder text for LOVESOMEMAMA live appreciate. More details coming soon...',
+          images: [
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
           ]
         }
       };
