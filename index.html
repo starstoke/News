@@ -174,7 +174,6 @@
       }
     }
 
-    /* Hero Section */
     .hero-section {
       position: relative;
       height: 400px;
@@ -319,7 +318,6 @@
       letter-spacing: 0.1em;
     }
 
-    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -382,6 +380,47 @@
       line-height: 1.8;
       color: #ccc;
       margin-bottom: 30px;
+    }
+
+    .modal-video-preview {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      height: 225px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 15px;
+      margin: 20px auto;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .modal-video-preview::after {
+      content: '▶';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: #FFF8E1;
+      text-shadow: 0 0 10px rgba(255, 248, 225, 0.5);
+    }
+
+    .modal-credits {
+      display: block;
+      color: #FFF8E1;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-top: 10px;
+      text-decoration: none;
+      font-weight: 100;
+      transition: color 0.3s;
+    }
+
+    .modal-credits:hover {
+      color: #FFE0B2;
+      text-shadow: 0 0 10px rgba(255, 248, 225, 0.5);
     }
 
     .modal-images {
@@ -529,6 +568,10 @@
 
       .modal-image {
         height: 100px;
+      }
+
+      .modal-video-preview {
+        height: 180px;
       }
     }
   </style>
@@ -738,7 +781,10 @@
           images: [
             'https://via.placeholder.com/600x200?text=Event+Image+1',
             'https://via.placeholder.com/600x200?text=Event+Image+2'
-          ]
+          ],
+          videoPreview: 'https://img.youtube.com/vi/WRd3OcMby4Q/maxresdefault.jpg',
+          videoUrl: 'https://youtu.be/WRd3OcMby4Q?si=W84p44nTXbD8Wd8R',
+          creditsUrl: 'https://dac.taipei/en/project/dacu-uwp-digital-art-and-music-festival-001-slut-online'
         },
         5: {
           title: 'SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week',
@@ -764,6 +810,15 @@
         modalTitle.innerHTML = article.title.replace('Thaixotix', '<span style="color: #32CD32;">Thaixotix</span>');
         modalDate.textContent = article.date;
         modalText.innerHTML = article.text;
+
+        // Add video preview and credits link for article 4
+        if (articleId === '4' && article.videoPreview && article.videoUrl && article.creditsUrl) {
+          modalText.innerHTML += `
+            <a href="${article.videoUrl}" target="_blank" class="modal-video-preview" style="background-image: url('${article.videoPreview}');"></a>
+            <a href="${article.creditsUrl}" target="_blank" class="modal-credits">Credits</a>
+          `;
+        }
+
         modalImages.innerHTML = article.images.map(img => 
           `<div class="modal-image" style="background-image: url('${img}');"></div>`
         ).join('');
