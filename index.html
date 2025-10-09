@@ -1,932 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Starstoke News</title>
-  <meta name="description" content="Starstoke News – Latest updates from the independent music label.">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #fff;
-      line-height: 1.8;
-      overflow-x: hidden;
-      background: #000;
-      position: relative;
-      font-weight: 100;
-      letter-spacing: 0.15em;
-    }
-
-    #vanta-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .grain-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      opacity: 0.03;
-      z-index: 1;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    }
-
-    .content-wrapper {
-      position: relative;
-      z-index: 2;
-      padding: 80px 15px 15px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      max-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 100;
-      letter-spacing: 0.15em;
-      transition: color 0.4s cubic-bezier(0.33, 0, 0.66, 1);
-      position: relative;
-      padding: 8px 10px;
-      white-space: nowrap;
-    }
-
-    .nav-links a:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      right: -10px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 16px;
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .nav-links a:hover {
-      color: #FFF8E1;
-      text-shadow: 0 0 10px rgba(255, 248, 225, 0.5);
-    }
-
-    header {
-      text-align: center;
-      padding: 80px 20px 60px;
-      position: relative;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 30px;
-      backdrop-filter: blur(12px);
-      margin-bottom: 50px;
-    }
-
-    .logo {
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 100;
-      letter-spacing: 0.2em;
-      color: #fff;
-      margin-bottom: 20px;
-      animation: fadeInUp 1.2s cubic-bezier(0.33, 0, 0.66, 1);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .logo .star {
-      display: inline-block;
-      color: #FFF8E1;
-      animation: sparkle 2.5s ease-in-out infinite;
-      text-shadow: 0 0 15px rgba(255, 248, 225, 0.4),
-                   0 0 30px rgba(255, 248, 225, 0.2);
-    }
-
-    @keyframes sparkle {
-      0%, 100% { 
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-      }
-      50% { 
-        transform: scale(1.1) rotate(180deg);
-        opacity: 0.9;
-      }
-    }
-
-    .tagline {
-      font-size: clamp(0.85rem, 1.8vw, 1rem);
-      color: #ccc;
-      max-width: 600px;
-      margin: 0 auto;
-      font-weight: 100;
-      letter-spacing: 0.15em;
-      animation: fadeInUp 1.2s cubic-bezier(0.33, 0, 0.66, 1) 0.3s backwards;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-section {
-      position: relative;
-      height: 400px;
-      margin-bottom: 60px;
-      border-radius: 30px;
-      overflow: hidden;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(12px);
-    }
-
-    .hero-carousel {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .hero-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 30px;
-    }
-
-    .hero-slide.active {
-      opacity: 1;
-    }
-
-    .hero-content {
-      text-align: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 20px;
-      max-width: 80%;
-    }
-
-    .hero-title {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 100;
-      letter-spacing: 0.2em;
-      background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-      color: #ccc;
-      font-weight: 100;
-      letter-spacing: 0.15em;
-    }
-
-    .section {
-      margin-bottom: 60px;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.8s cubic-bezier(0.33, 0, 0.66, 1), transform 0.8s cubic-bezier(0.33, 0, 0.66, 1);
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 30px;
-      padding: 30px;
-      backdrop-filter: blur(12px);
-    }
-
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-title {
-      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
-      font-weight: 100;
-      margin-bottom: 40px;
-      text-align: center;
-      letter-spacing: 0.2em;
-      background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .news-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 30px;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1);
-      cursor: pointer;
-    }
-
-    .news-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 248, 225, 0.1);
-      box-shadow: 0 0 15px rgba(255, 248, 225, 0.2);
-    }
-
-    .news-image {
-      height: 150px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .news-content {
-      padding: 15px;
-    }
-
-    .news-date {
-      color: #999;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 8px;
-      font-weight: 100;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 100;
-      margin-bottom: 8px;
-      letter-spacing: 0.15em;
-    }
-
-    .card-subtitle {
-      color: #ccc;
-      font-size: 0.8rem;
-      margin-bottom: 12px;
-      font-weight: 100;
-      letter-spacing: 0.1em;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
-      z-index: 2000;
-      overflow-y: auto;
-      padding: 60px 20px;
-    }
-
-    .modal.active {
-      display: block;
-    }
-
-    .modal-content {
-      max-width: 800px;
-      margin: 0 auto;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 30px;
-      padding: 30px;
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 1.5rem;
-      color: #fff;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .modal-close:hover {
-      color: #FFF8E1;
-    }
-
-    .modal-title {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 100;
-      letter-spacing: 0.2em;
-      background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-    }
-
-    .modal-date {
-      color: #999;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 20px;
-    }
-
-    .modal-text {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: #ccc;
-      margin-bottom: 30px;
-    }
-
-    .modal-video-preview {
-      display: block;
-      width: 100%;
-      max-width: 400px;
-      height: 225px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 15px;
-      margin: 20px auto;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .modal-video-preview::after {
-      content: '▶';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      color: #FFF8E1;
-      text-shadow: 0 0 10px rgba(255, 248, 225, 0.5);
-    }
-
-    .modal-credits {
-      display: block;
-      color: #FFF8E1;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-align: center;
-      margin-top: 10px;
-      text-decoration: none;
-      font-weight: 100;
-      transition: color 0.3s;
-    }
-
-    .modal-credits:hover {
-      color: #FFE0B2;
-      text-shadow: 0 0 10px rgba(255, 248, 225, 0.5);
-    }
-
-    .modal-images {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .modal-image {
-      width: 100%;
-      height: 150px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 15px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 60px 15px 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      margin-top: 60px;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 30px;
-      backdrop-filter: blur(12px);
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 25px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      padding: 8px 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 30px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 100;
-      font-size: 0.75rem;
-      transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1);
-      letter-spacing: 0.15em;
-      min-width: 70px;
-      text-align: center;
-    }
-
-    .social-links a:hover {
-      background: rgba(255, 248, 225, 0.1);
-      border-color: rgba(255, 248, 225, 0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 0 10px rgba(255, 248, 225, 0.2);
-    }
-
-    .copyright {
-      color: #999;
-      margin-top: 25px;
-      font-size: 0.75rem;
-      font-weight: 100;
-      letter-spacing: 0.15em;
-    }
-
-    @media (max-width: 768px) {
-      .content-wrapper {
-        padding: 70px 10px 10px;
-      }
-
-      .nav-links {
-        gap: 12px;
-        justify-content: center;
-      }
-
-      .nav-links a {
-        font-size: 0.8rem;
-        padding: 6px 8px;
-      }
-
-      .nav-links a:not(:last-child)::after {
-        right: -6px;
-        height: 10px;
-      }
-
-      header {
-        padding: 50px 10px 30px;
-      }
-
-      .logo {
-        font-size: clamp(1.8rem, 7vw, 2.5rem);
-      }
-
-      .tagline {
-        font-size: clamp(0.75rem, 1.8vw, 0.85rem);
-        padding: 0 10px;
-      }
-
-      .hero-section {
-        height: 300px;
-      }
-
-      .hero-content {
-        padding: 15px;
-        max-width: 90%;
-      }
-
-      .hero-title {
-        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-      }
-
-      .hero-subtitle {
-        font-size: clamp(0.8rem, 1.3vw, 0.9rem);
-      }
-
-      .section {
-        margin-bottom: 50px;
-        padding: 25px 10px;
-      }
-
-      .section-title {
-        font-size: clamp(1.4rem, 2.8vw, 1.8rem);
-        margin-bottom: 25px;
-      }
-
-      .news-card {
-        flex: 0 0 260px;
-      }
-
-      .news-image {
-        height: 120px;
-      }
-
-      .modal {
-        padding: 40px 10px;
-      }
-
-      .modal-content {
-        padding: 20px;
-      }
-
-      .modal-title {
-        font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-      }
-
-      .modal-image {
-        height: 100px;
-      }
-
-      .modal-video-preview {
-        height: 180px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Starstoke News</title>
+<meta name="description" content="Starstoke News – Latest updates from the independent music label.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;…);
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; line-height: 1.8; overflow-x: hidden; background: #000; position: relative; font-weight: 100; letter-spacing: 0.15em; }
+#vanta-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+.grain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; opacity: 0.03; z-index: 1; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+.content-wrapper { position: relative; z-index: 2; padding: 80px 15px 15px; }
+.container { max-width: 1200px; margin: 0 auto; }
+nav { position: fixed; top: 0; left: 0; width: 100vw; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 1000; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); max-height: 60px; display: flex; align-items: center; justify-content: center; }
+.nav-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; }
+.nav-links a { color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 100; letter-spacing: 0.15em; transition: color 0.4s cubic-bezier(0.33, 0, 0.66, 1); position: relative; padding: 8px 10px; white-space: nowrap; }
+.nav-links a:not(:last-child)::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 1px; height: 16px; background: rgba(255, 255, 255, 0.3); }
+.nav-links a:hover { color: #FFF8E1; text-shadow: 0 0 10px rgba(255, 248, 225, 0.5); }
+header { text-align: center; padding: 80px 20px 60px; position: relative; background: rgba(0, 0, 0, 0.6); border-radius: 30px; backdrop-filter: blur(12px); margin-bottom: 50px; }
+.logo { font-size: clamp(2rem, 5vw, 4rem); font-weight: 100; letter-spacing: 0.2em; color: #fff; margin-bottom: 20px; animation: fadeInUp 1.2s cubic-bezier(0.33, 0, 0.66, 1); font-family: 'Inter', sans-serif; }
+.logo .star { display: inline-block; color: #FFF8E1; animation: sparkle 2.5s ease-in-out infinite; text-shadow: 0 0 15px rgba(255, 248, 225, 0.4), 0 0 30px rgba(255, 248, 225, 0.2); }
+@keyframes sparkle { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; } 50% { transform: scale(1.1) rotate(180deg); opacity: 0.9; } }
+.tagline { font-size: clamp(0.85rem, 1.8vw, 1rem); color: #ccc; max-width: 600px; margin: 0 auto; font-weight: 100; letter-spacing: 0.15em; animation: fadeInUp 1.2s cubic-bezier(0.33, 0, 0.66, 1) 0.3s backwards; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.hero-section { position: relative; height: 400px; margin-bottom: 60px; border-radius: 30px; overflow: hidden; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); }
+.hero-carousel { position: relative; width: 100%; height: 100%; }
+.hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center; display: flex; align-items: flex-end; justify-content: center; padding: 30px; }
+.hero-slide.active { opacity: 1; }
+.hero-content { text-align: center; background: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 20px; max-width: 80%; }
+.hero-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 100; letter-spacing: 0.2em; background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; cursor: pointer; }
+.hero-subtitle { font-size: clamp(0.9rem, 1.5vw, 1.1rem); color: #ccc; font-weight: 100; letter-spacing: 0.15em; }
+.section { margin-bottom: 60px; opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.33, 0, 0.66, 1), transform 0.8s cubic-bezier(0.33, 0, 0.66, 1); background: rgba(0, 0, 0, 0.6); border-radius: 30px; padding: 30px; backdrop-filter: blur(12px); }
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-title { font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 100; margin-bottom: 40px; text-align: center; letter-spacing: 0.2em; background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.news-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 30px; overflow: hidden; transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1); cursor: pointer; }
+.news-card:hover { transform: translateY(-5px); border-color: rgba(255, 248, 225, 0.1); box-shadow: 0 0 15px rgba(255, 248, 225, 0.2); }
+.news-image { height: 150px; background-size: cover; background-position: center; }
+.news-content { padding: 15px; }
+.news-date { color: #999; font-size: 0.7rem; letter-spacing: 0.15em; margin-bottom: 8px; font-weight: 100; }
+.card-title { font-size: 1.1rem; font-weight: 100; margin-bottom: 8px; letter-spacing: 0.15em; }
+.card-subtitle { color: #ccc; font-size: 0.8rem; margin-bottom: 12px; font-weight: 100; letter-spacing: 0.1em; }
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 2000; overflow-y: auto; padding: 60px 20px; }
+.modal.active { display: block; }
+.modal-content { max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 30px; padding: 30px; position: relative; }
+.modal-close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: #fff; cursor: pointer; transition: color 0.3s; }
+.modal-close:hover { color: #FFF8E1; }
+.modal-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 100; letter-spacing: 0.2em; background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+.modal-date { color: #999; font-size: 0.9rem; letter-spacing: 0.15em; margin-bottom: 20px; }
+.modal-text { font-size: 1rem; line-height: 1.8; color: #ccc; margin-bottom: 30px; }
+.modal-video-preview { display: block; width: 100%; max-width: 400px; height: 225px; background-size: cover; background-position: center; border-radius: 15px; margin: 20px auto; cursor: pointer; position: relative; }
+.modal-video-preview::after { content: '▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; color: #FFF8E1; text-shadow: 0 0 10px rgba(255, 248, 225, 0.5); }
+.modal-credits { display: block; color: #FFF8E1; font-size: 0.9rem; letter-spacing: 0.15em; text-align: center; margin-top: 10px; text-decoration: none; font-weight: 100; transition: color 0.3s; }
+.modal-credits:hover { color: #FFE0B2; text-shadow: 0 0 10px rgba(255, 248, 225, 0.5); }
+.modal-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+.modal-image { width: 100%; height: 150px; background-size: cover; background-position: center; border-radius: 15px; }
+footer { text-align: center; padding: 60px 15px 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 60px; background: rgba(0, 0, 0, 0.6); border-radius: 30px; backdrop-filter: blur(12px); }
+.social-links { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+.social-links a { padding: 8px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; color: #fff; text-decoration: none; font-weight: 100; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.33, 0, 0.66, 1); letter-spacing: 0.15em; min-width: 70px; text-align: center; }
+.social-links a:hover { background: rgba(255, 248, 225, 0.1); border-color: rgba(255, 248, 225, 0.2); transform: translateY(-2px); box-shadow: 0 0 10px rgba(255, 248, 225, 0.2); }
+.copyright { color: #999; margin-top: 25px; font-size: 0.75rem; font-weight: 100; letter-spacing: 0.15em; }
+@media (max-width: 768px) {
+.content-wrapper { padding: 70px 10px 10px; }
+.nav-links { gap: 12px; justify-content: center; }
+.nav-links a { font-size: 0.8rem; padding: 6px 8px; }
+.nav-links a:not(:last-child)::after { right: -6px; height: 10px; }
+header { padding: 50px 10px 30px; }
+.logo { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+.tagline { font-size: clamp(0.75rem, 1.8vw, 0.85rem); padding: 0 10px; }
+.hero-section { height: 300px; }
+.hero-content { padding: 15px; max-width: 90%; }
+.hero-title { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+.hero-subtitle { font-size: clamp(0.8rem, 1.3vw, 0.9rem); }
+.section { margin-bottom: 50px; padding: 25px 10px; }
+.section-title { font-size: clamp(1.4rem, 2.8vw, 1.8rem); margin-bottom: 25px; }
+.news-card { flex: 0 0 260px; }
+.news-image { height: 120px; }
+.modal { padding: 40px 10px; }
+.modal-content { padding: 20px; }
+.modal-title { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+.modal-image { height: 100px; }
+.modal-video-preview { height: 180px; }
+}
+</style>
 </head>
 <body>
-  <div id="vanta-bg"></div>
-  <div class="grain-overlay"></div>
-
-  <nav>
-    <div class="container">
-      <div class="nav-links">
-        <a href="news.html">News</a>
-        <a href="shop.html">Shop</a>
-        <a href="index.html#artists">Artists</a>
-        <a href="starstoketv.html">TV</a>
-        <a href="index.html#about">About</a>
-        <a href="index.html#contact">Contact Us</a>
-      </div>
-    </div>
-  </nav>
-
-  <div class="content-wrapper">
-    <div class="container">
-      <header>
-        <h1 class="logo">St<span class="star">★</span>rstoke News</h1>
-        <p class="tagline">Latest updates and announcements</p>
-      </header>
-
-      <section class="hero-section">
-        <div class="hero-carousel">
-          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+1');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="1">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h2>
-              <p class="hero-subtitle">Check out our first big promo party!</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+2');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="2">Starstoke promotion opening ivent.</h2>
-              <p class="hero-subtitle">Read more information…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('IMG_0142.jpeg');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="3">ETOPOLE Visual digest from the capital!</h2>
-              <p class="hero-subtitle">Click here to watch and see more…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('IMG_7535.jpeg');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="4">HYPERBEAST ! Slut Online Thaipei live performance</h2>
-              <p class="hero-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image:IMG_7551.jpeg;">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="5">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h2>
-              <p class="hero-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+6');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="6">VIP $XD creator live stram set-up</h2>
-              <p class="hero-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+7');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="7">Malina Scar birthday party digest</h2>
-              <p class="hero-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+8');">
-            <div class="hero-content">
-              <h2 class="hero-title" data-article-id="8">LOVESOMEMAMA live appreciate</h2>
-              <p class="hero-subtitle">Click to read more…</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2 class="section-title">All News</h2>
-        <div class="news-grid">
-          <div class="news-card" data-article-id="1">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">25 January 2025</div>
-              <h3 class="card-title">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h3>
-              <p class="card-subtitle">Check out our first big promo party!</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="2">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">13 December, 2024</div>
-              <h3 class="card-title">Starstoke promotion opening ivent.</h3>
-              <p class="card-subtitle">Read more information…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="3">
-            <div class="news-image" style="background-image: url('IMG_7544.jpeg');"></div>
-            <div class="news-content">
-              <div class="news-date">28 September 2025</div>
-              <h3 class="card-title">ETOPOLE Visual digest from the capital!</h3>
-              <p class="card-subtitle">Click here to watch and see more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="4">
-            <div class="news-image" style="background-image: url('IMG_7535.jpeg');"></div>
-            <div class="news-content">
-              <div class="news-date">2 March 2024</div>
-              <h3 class="card-title">HYPERBEAST ! Slut Online Thaipei live performance</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="5">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">2 March 2025</div>
-              <h3 class="card-title">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="6">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">15 October 2025</div>
-              <h3 class="card-title">VIP $XD creator live stram set-up</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="7">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">20 October 2025</div>
-              <h3 class="card-title">Malina Scar birthday party digest</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-          <div class="news-card" data-article-id="8">
-            <div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
-            <div class="news-content">
-              <div class="news-date">25 October 2025</div>
-              <h3 class="card-title">LOVESOMEMAMA live appreciate</h3>
-              <p class="card-subtitle">Click to read more…</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="modal" id="article-modal">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h2 class="modal-title"></h2>
-          <div class="modal-date"></div>
-          <div class="modal-text"></div>
-          <div class="modal-images"></div>
-        </div>
-      </div>
-
-      <footer>
-        <h2 class="logo" style="font-size: 1.8rem; margin-bottom: 15px;">St<span class="star">★</span>rstoke</h2>
-        <div class="social-links">
-          <a href="https://www.instagram.com/starstoke777?igsh=eWFtYWJyZjcxeWlv&utm_source=qr">Instagram</a>
-          <a href="https://on.soundcloud.com/gShwnGE3RKMUyBKHi7">Soundcloud</a>
-          <a href="https://youtube.com/@starstoketv?si=7t31o1fBdyO8SmLE">Youtube</a>
-          <a href="#">Telegram</a>
-        </div>
-        <p class="copyright">© 2025 Starstoke Label. All rights reserved.</p>
-      </footer>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Vanta.js initialization
-      const isMobile = window.innerWidth <= 768;
-      let vantaEffect = VANTA.NET({
-        el: "#vanta-bg",
-        mouseControls: !isMobile,
-        touchControls: isMobile,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0xFFF8E1,
-        backgroundColor: 0x000000,
-        points: isMobile ? 8.0 : 15.0,
-        maxDistance: isMobile ? 18.0 : 25.0,
-        spacing: isMobile ? 12.0 : 18.0,
-        showDots: true,
-        lineOpacity: isMobile ? 0.15 : 0.25
-      });
-
-      // Hero Carousel
-      const heroSlides = document.querySelectorAll('.hero-slide');
-      let currentHeroSlide = 0;
-
-      function showHeroSlide(index) {
-        heroSlides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
-        });
-      }
-
-      function nextHeroSlide() {
-        currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
-        showHeroSlide(currentHeroSlide);
-      }
-
-      showHeroSlide(currentHeroSlide);
-      setInterval(nextHeroSlide, 5000);
-
-      // Article Data
-      const articles = {
-        1: {
-          title: 'SWING promo party at Thaixotix',
-          date: '25 January 2025',
-          text: 'In the end, one month of thinking made us realise that we want to make another promo event… Sponsored by PP crypto coin a.k.a. XD$, we were able to set up in Thaixotix shop. Womderfull place at the old-town of Bangkok. All the preparations took us a couple of days to set up, including our own soundsystem, as long as decoration with the real flowers. We had two surprises in, one form real Taipei legend Gao Xiao Gao participating in our event ! Another one was our secret guest Malina Scar. Gao Xiao Gao gave live performance of her music for live audience. In terms of public this event was kinda disappointed me not because of amount of guests we actually had more than 130 ! people, but some of some of their behaviour. Even though, this small detail could not ruin the evening and the outcome of this event was ONLY extremely positive… So stay TUNED for now, it might happen again !',
-          images: [
-            'https://via.placeholder.com/600x200?text=Article+Image+1',
-            'https://via.placeholder.com/600x200?text=Article+Image+2'
-          ]
-        },
-        2: {
-          title: 'Starstoke promotion opening ivent.',
-          date: '13 December 2024',
-          text: 'Starstoke A.K.A. Swing platform took its official opening ceremony at «Sandy studio», followed by second concert-event! We got to showcase some local talents, plus get to know so many incredible people. Even if it was rough this experience still gave us a lot to think about in terms of physical events. What came out of it is in the next news topic… Stay TUNED',
-          images: [
-            'https://via.placeholder.com/600x200?text=Festival+Image+1',
-            'https://via.placeholder.com/600x200?text=Festival+Image+2'
-          ]
-        },
-        3: {
-          title: 'ETOPOLE Visual digest from the capital!',
-          date: '28 September 2025',
-          text: 'Slut Online at ETOPOLE with the team of “Vent Music” platform. Quick video digest, showcase of not only the artist, but also full production in motion. With collaboration featuring Biopunkcamera Performance Production.',
-          images: [
-            'https://via.placeholder.com/600x200?text=Collection+Image+1',
-            'https://via.placeholder.com/600x200?text=Collection+Image+2'
-          ]
-        },
-        4: {
-          title: 'HYPERBEAST ! Slut Online Thaipei live performance',
-          date: '2 March 2024',
-          text: 'Event hosted by «UWP 數位藝術音樂節 Digital Art Center Music Festival 001» in Thaipei saw participation with our incredible sound and music designer Slut Online, who also got a feature in Thaiwan HYPERBEAST promo! <br>Read the official event news page <a href="https://events.mcu.edu.tw/event/uwp-%E6%95%B8%E4%BD%8D%E8%97%9D%E8%A1%93%E9%9F%B3%E6%A8%82%E7%AF%80-digital-art-center-music-festival-001-slut-online/">here</a>',
-          images: [
-            'https://via.placeholder.com/600x200?text=Event+Image+1',
-            'https://via.placeholder.com/600x200?text=Event+Image+2'
-          ],
-          videoPreview: 'https://img.youtube.com/vi/WRd3OcMby4Q/maxresdefault.jpg',
-          videoUrl: 'https://youtu.be/WRd3OcMby4Q?si=W84p44nTXbD8Wd8R',
-          creditsUrl: 'https://dac.taipei/en/project/dacu-uwp-digital-art-and-music-festival-001-slut-online'
-        },
-        5: {
-          title: 'SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week',
-          date: '2 March 2025',
-          text: 'SWING+ merch & thrift marketplace took it’s place at Gumpscross space. Alongside some other terrific designers and creators, we were happy to be part of such a fun pleasent experience. Followed by a surprise appearance of <a href="https://www.instagram.com/fake_toooth?igsh=bHFqdXBhZnZtZXBq" style="color: red;">FakeToooth</a>, evening finished with a rooftop party. Stay TUNED for more news and updates !',
-          images: [
-            'https://via.placeholder.com/600x200?text=Event+Image+1',
-            'https://via.placeholder.com/600x200?text=Event+Image+2'
-          ]
-        },
-        6: {
-          title: 'VIP $XD creator live stram set-up',
-          date: '15 October 2025',
-          text: 'Placeholder text for VIP $XD creator live stram set-up. More details coming soon...',
-          images: [
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
-          ]
-        },
-        7: {
-          title: 'Malina Scar birthday party digest',
-          date: '20 October 2025',
-          text: 'Placeholder text for Malina Scar birthday party digest. More details coming soon...',
-          images: [
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
-          ]
-        },
-        8: {
-          title: 'LOVESOMEMAMA live appreciate',
-          date: '25 October 2025',
-          text: 'Placeholder text for LOVESOMEMAMA live appreciate. More details coming soon...',
-          images: [
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
-            'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
-          ]
-        }
-      };
-
-      // Modal Functionality
-      const modal = document.getElementById('article-modal');
-      const modalTitle = modal.querySelector('.modal-title');
-      const modalDate = modal.querySelector('.modal-date');
-      const modalText = modal.querySelector('.modal-text');
-      const modalImages = modal.querySelector('.modal-images');
-      const modalClose = modal.querySelector('.modal-close');
-
-      function openModal(articleId) {
-        const article = articles[articleId];
-        modalTitle.innerHTML = article.title.replace('Thaixotix', '<span style="color: #32CD32;">Thaixotix</span>');
-        modalDate.textContent = article.date;
-        modalText.innerHTML = article.text;
-
-        if (articleId === '4' && article.videoPreview && article.videoUrl && article.creditsUrl) {
-          modalText.innerHTML += `
-            <a href="${article.videoUrl}" target="_blank" class="modal-video-preview" style="background-image: url('${article.videoPreview}');"></a>
-            <a href="${article.creditsUrl}" target="_blank" class="modal-credits">Credits</a>
-          `;
-        }
-
-        modalImages.innerHTML = article.images.map(img => 
-          `<div class="modal-image" style="background-image: url('${img}');"></div>`
-        ).join('');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-
-      document.querySelectorAll('.news-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const articleId = card.getAttribute('data-article-id');
-          openModal(articleId);
-        });
-      });
-
-      document.querySelectorAll('.hero-title').forEach(title => {
-        title.addEventListener('click', () => {
-          const articleId = title.getAttribute('data-article-id');
-          openModal(articleId);
-        });
-      });
-
-      modalClose.addEventListener('click', closeModal);
-
-      // Make sections visible on scroll
-      const sections = document.querySelectorAll('.section');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
-
-      sections.forEach(section => observer.observe(section));
+<div id="vanta-bg"></div>
+<div class="grain-overlay"></div>
+<nav>
+<div class="container">
+<div class="nav-links">
+<a href="news.html">News</a>
+<a href="shop.html">Shop</a>
+<a href="index.html#artists">Artists</a>
+<a href="starstoketv.html">TV</a>
+<a href="index.html#about">About</a>
+<a href="index.html#contact">Contact Us</a>
+</div>
+</div>
+</nav>
+<div class="content-wrapper">
+<div class="container">
+<header>
+<h1 class="logo">St<span class="star">★</span>rstoke News</h1>
+<p class="tagline">Latest updates and announcements</p>
+</header>
+<section class="hero-section">
+<div class="hero-carousel">
+<div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+1');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="1">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h2>
+<p class="hero-subtitle">Check out our first big promo party!</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+2');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="2">Starstoke promotion opening ivent.</h2>
+<p class="hero-subtitle">Read more information…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('IMG_0142.jpeg');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="3">ETOPOLE Visual digest from the capital!</h2>
+<p class="hero-subtitle">Click here to watch and see more…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('IMG_7535.jpeg');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="4">HYPERBEAST ! Slut Online Thaipei live performance</h2>
+<p class="hero-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('IMG_7551.jpeg');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="5">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h2>
+<p class="hero-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+6');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="6">VIP $XD creator live stram set-up</h2>
+<p class="hero-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+7');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="7">Malina Scar birthday party digest</h2>
+<p class="hero-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="hero-slide" style="background-image: url('https://via.placeholder.com/1200x400?text=Hero+Image+8');">
+<div class="hero-content">
+<h2 class="hero-title" data-article-id="8">LOVESOMEMAMA live appreciate</h2>
+<p class="hero-subtitle">Click to read more…</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<h2 class="section-title">All News</h2>
+<div class="news-grid">
+<div class="news-card" data-article-id="1">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">25 January 2025</div>
+<h3 class="card-title">SWING promo party at <span style="color: #32CD32;">Thaixotix</span></h3>
+<p class="card-subtitle">Check out our first big promo party!</p>
+</div>
+</div>
+<div class="news-card" data-article-id="2">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">13 December, 2024</div>
+<h3 class="card-title">Starstoke promotion opening ivent.</h3>
+<p class="card-subtitle">Read more information…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="3">
+<div class="news-image" style="background-image: url('IMG_7544.jpeg');"></div>
+<div class="news-content">
+<div class="news-date">28 September 2025</div>
+<h3 class="card-title">ETOPOLE Visual digest from the capital!</h3>
+<p class="card-subtitle">Click here to watch and see more…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="4">
+<div class="news-image" style="background-image: url('IMG_7535.jpeg');"></div>
+<div class="news-content">
+<div class="news-date">2 March 2024</div>
+<h3 class="card-title">HYPERBEAST ! Slut Online Thaipei live performance</h3>
+<p class="card-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="5">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">2 March 2025</div>
+<h3 class="card-title">SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week</h3>
+<p class="card-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="6">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">15 October 2025</div>
+<h3 class="card-title">VIP $XD creator live stram set-up</h3>
+<p class="card-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="7">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">20 October 2025</div>
+<h3 class="card-title">Malina Scar birthday party digest</h3>
+<p class="card-subtitle">Click to read more…</p>
+</div>
+</div>
+<div class="news-card" data-article-id="8">
+<div class="news-image" style="background-image: url('https://via.placeholder.com/600x200?text=Example+of+News');"></div>
+<div class="news-content">
+<div class="news-date">25 October 2025</div>
+<h3 class="card-title">LOVESOMEMAMA live appreciate</h3>
+<p class="card-subtitle">Click to read more…</p>
+</div>
+</div>
+</div>
+</section>
+<div class="modal" id="article-modal">
+<div class="modal-content">
+<span class="modal-close">&times;</span>
+<h2 class="modal-title"></h2>
+<div class="modal-date"></div>
+<div class="modal-text"></div>
+<div class="modal-images"></div>
+</div>
+</div>
+<footer>
+<h2 class="logo" style="font-size: 1.8rem; margin-bottom: 15px;">St<span class="star">★</span>rstoke</h2>
+<div class="social-links">
+<a href="https://www.instagram.com/starstoke777?igsh=eWFtYWJyZjcxeWlv…">Instagram</a>
+<a href="https://on.soundcloud.com/gShwnGE3RKMUyBKHi7">Soundcloud</a>
+<a href="https://youtube.com/@starstoketv?si=7t31o1fBdyO8SmLE">Youtube</a>
+<a href="#">Telegram</a>
+</div>
+<p class="copyright">© 2025 Starstoke Label. All rights reserved.</p>
+</footer>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.m…"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min…"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Vanta.js initialization
+  const isMobile = window.innerWidth <= 768;
+  let vantaEffect = VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: !isMobile,
+    touchControls: isMobile,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0xFFF8E1,
+    backgroundColor: 0x000000,
+    points: isMobile ? 8.0 : 15.0,
+    maxDistance: isMobile ? 18.0 : 25.0,
+    spacing: isMobile ? 12.0 : 18.0,
+    showDots: true,
+    lineOpacity: isMobile ? 0.15 : 0.25
+  });
+ 
+  // Hero Carousel
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  let currentHeroSlide = 0;
+ 
+  function showHeroSlide(index) {
+    heroSlides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
     });
-  </script>
+  }
+ 
+  function nextHeroSlide() {
+    currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+    showHeroSlide(currentHeroSlide);
+  }
+ 
+  showHeroSlide(currentHeroSlide);
+  setInterval(nextHeroSlide, 5000);
+ 
+  // Article Data
+  const articles = {
+    1: {
+      title: 'SWING promo party at Thaixotix',
+      date: '25 January 2025',
+      text: 'In the end, one month of thinking made us realise that we want to make another promo event… Sponsored by PP crypto coin a.k.a. XD$, we were able to set up in Thaixotix shop. Womderfull place at the old-town of Bangkok. All the preparations took us a couple of days to set up, including our own soundsystem, as long as decoration with the real flowers. We had two surprises in, one form real Taipei legend Gao Xiao Gao participating in our event ! Another one was our secret guest Malina Scar. Gao Xiao Gao gave live performance of her music for live audience. In terms of public this event was kinda disappointed me not because of amount of guests we actually had more than 130 ! people, but some of some of their behaviour. Even though, this small detail could not ruin the evening and the outcome of this event was ONLY extremely positive… So stay TUNED for now, it might happen again !',
+      images: [
+        'https://via.placeholder.com/600x200?text=Article+Image+1',
+        'https://via.placeholder.com/600x200?text=Article+Image+2'
+      ]
+    },
+    2: {
+      title: 'Starstoke promotion opening ivent.',
+      date: '13 December 2024',
+      text: 'Starstoke A.K.A. Swing platform took its official opening ceremony at «Sandy studio», followed by second concert-event! We got to showcase some local talents, plus get to know so many incredible people. Even if it was rough this experience still gave us a lot to think about in terms of physical events. What came out of it is in the next news topic… Stay TUNED',
+      images: [
+        'https://via.placeholder.com/600x200?text=Festival+Image+1',
+        'https://via.placeholder.com/600x200?text=Festival+Image+2'
+      ]
+    },
+    3: {
+      title: 'ETOPOLE Visual digest from the capital!',
+      date: '28 September 2025',
+      text: 'Slut Online at ETOPOLE with the team of “Vent Music” platform. Quick video digest, showcase of not only the artist, but also full production in motion. With collaboration featuring Biopunkcamera Performance Production.',
+      images: [
+        'https://via.placeholder.com/600x200?text=Collection+Image+1',
+        'https://via.placeholder.com/600x200?text=Collection+Image+2'
+      ]
+    },
+    4: {
+      title: 'HYPERBEAST ! Slut Online Thaipei live performance',
+      date: '2 March 2024',
+      text: 'Event hosted by «UWP 數位藝術音樂節 Digital Art Center Music Festival 001» in Thaipei saw participation with our incredible sound and music designer Slut Online, who also got a feature in Thaiwan HYPERBEAST promo! <br>Read the official event news page <a href="https://events.mcu.edu.tw/event/uwp-%E6%95%B8%E4%BD%8D%E8%97…">here</a>',
+      images: [
+        'https://via.placeholder.com/600x200?text=Event+Image+1',
+        'https://via.placeholder.com/600x200?text=Event+Image+2'
+      ],
+      videoPreview: 'https://img.youtube.com/vi/WRd3OcMby4Q/maxresdefault.jpg',
+      videoUrl: 'https://youtu.be/WRd3OcMby4Q?si=W84p44nTXbD8Wd8R',
+      creditsUrl: 'https://dac.taipei/en/project/dacu-uwp-digital-art-and-music…'
+    },
+    5: {
+      title: 'SWING+ market at Freeform "Space Based Community" VOL.5 - Art&Music Week',
+      date: '2 March 2025',
+      text: 'SWING+ merch & thrift marketplace took it’s place at Gumpscross space. Alongside some other terrific designers and creators, we were happy to be part of such a fun pleasent experience. Followed by a surprise appearance of <a href="https://www.instagram.com/fake_toooth?igsh=bHFqdXBhZnZtZXBq" style="color: red;">FakeToooth</a>, evening finished with a rooftop party. Stay TUNED for more news and updates !',
+      images: [
+        'https://via.placeholder.com/600x200?text=Event+Image+1',
+        'https://via.placeholder.com/600x200?text=Event+Image+2'
+      ]
+    },
+    6: {
+      title: 'VIP $XD creator live stram set-up',
+      date: '15 October 2025',
+      text: 'Controversial internet crypto community persona $XD creator gave special surprise live interview to <a href="https://youtube.com/@rasmrr?si=wCTCRalB8Xi9BaMy">rasmr</a>, hosted by our team. We provided her persona with some funky generative animations and, mostly important, space for the interview itself. You can also check out live freestyle by bellowed Anika (a.k.a $XD PP-crypto coin creator) ! Click here to see full performance here ! <br><a href="https://youtube.com/playlist?list=PLDOiK-1Pysb73lX5hD82-C9Ek…" target="_blank" class="modal-video-preview" style="background-image: url('https://img.youtube.com/vi/WRd3OcMby4Q/maxresdefault.jpg');"></a>',
+      images: [
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
+      ]
+    },
+    7: {
+      title: 'Malina Scar birthday party digest',
+      date: '20 October 2025',
+      text: 'Placeholder text for Malina Scar birthday party digest. More details coming soon...',
+      images: [
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
+      ]
+    },
+    8: {
+      title: 'LOVESOMEMAMA live appreciate',
+      date: '25 October 2025',
+      text: 'Placeholder text for LOVESOMEMAMA live appreciate. More details coming soon...',
+      images: [
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+1',
+        'https://via.placeholder.com/600x200?text=Placeholder+Image+2'
+      ]
+    }
+  };
+ 
+  // Modal Functionality
+  const modal = document.getElementById('article-modal');
+  const modalTitle = modal.querySelector('.modal-title');
+  const modalDate = modal.querySelector('.modal-date');
+  const modalText = modal.querySelector('.modal-text');
+  const modalImages = modal.querySelector('.modal-images');
+  const modalClose = modal.querySelector('.modal-close');
+ 
+  function openModal(articleId) {
+    const article = articles[articleId];
+    modalTitle.innerHTML = article.title.replace('Thaixotix', '<span style="color: #32CD32;">Thaixotix</span>');
+    modalDate.textContent = article.date;
+    modalText.innerHTML = article.text;
+    modalImages.innerHTML = article.images.map(img => `<div class="modal-image" style="background-image: url('${img}');"></div>`).join('');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+ 
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+ 
+  document.querySelectorAll('.news-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const articleId = card.getAttribute('data-article-id');
+      openModal(articleId);
+    });
+  });
+ 
+  document.querySelectorAll('.hero-slide').forEach(slide => {
+    slide.addEventListener('click', () => {
+      const articleId = slide.querySelector('.hero-title').getAttribute('data-article-id');
+      openModal(articleId);
+    });
+  });
+ 
+  modalClose.addEventListener('click', closeModal);
+ 
+  // Make sections visible on scroll
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+ 
+  sections.forEach(section => observer.observe(section));
+});
+</script>
 </body>
 </html>
